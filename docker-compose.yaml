@@ -1,0 +1,50 @@
+version: "3.2"
+services:
+  nginx:
+    restart: always
+    image: fwchen/octopus-web:latest
+    ports:
+      - "127.0.0.1:9090:80"
+    networks:
+      - octopus
+    links:
+      - backend:api
+  mysql:
+    restart: always
+    image: mysql:8.0.15
+    command: --default-authentication-plugin=mysql_native_password
+    networks:
+      - octopus
+    environment:
+      MYSQL_USER: octopus
+      MYSQL_PASSWORD: ${OCTO_MYSQL_PW}
+      MYSQL_DATABASE: octopus
+    volumes:
+      -  /root/octopus/mysql-data:/var/lib/mysql
+  mongo:
+    restart: always
+    image: mongo:3.6.0
+    network: octopus
+  backend:
+    restart: always
+    image: fwchen/octopus-backend:latest
+    ports:
+      - "127.0.0.1:5501:5501"
+    networks:
+      - octopus
+    environment:
+      SERCET_KEY: ${OCTO_MYSQL_PW}
+      MYSQL_HOST: mysql
+      MYSQL_USERNAME: octopus
+      MYSQL_PASSWORD: ${OCTO_MYSQL_PW}
+      MYSQL_DB: octopus
+      MONGO_URL: ${OCTO_MONGO_URL}
+    volumes:
+      - ./config:/config
+      - ./storage:/usr/src/app/storage
+      - ./log:/usr/src/app/log
+    depends_on:
+      - mysql
+      - mongo
+networks:
+  octopus:
