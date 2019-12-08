@@ -24,7 +24,8 @@ services:
   mongo:
     restart: always
     image: mongo:3.6.0
-    network: octopus
+    networks:
+      - octopus
   backend:
     restart: always
     image: fwchen/octopus-backend:latest
