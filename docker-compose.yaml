@@ -37,12 +37,12 @@ services:
     networks:
       - octopus
     environment:
-      SERCET_KEY: ${OCTO_MYSQL_PW}
-      MYSQL_HOST: mysql
-      MYSQL_USERNAME: octopus
-      MYSQL_PASSWORD: ${OCTO_MYSQL_PW}
-      MYSQL_DB: octopus
-      MONGO_URL: ${OCTO_MONGO_URL}
+      OCTO_SERCET_KEY: ${OCTO_APP_SERCET}
+      OCTO_MYSQL_HOST: mysql
+      OCTO_MYSQL_USERNAME: octopus
+      OCTO_MYSQL_PASSWORD: ${OCTO_MYSQL_PW}
+      OCTO_MYSQL_DB: octopus
+      OCTO_MONGO_URL: ${OCTO_MONGO_URL}
     volumes:
       - ./config:/config
       - ./storage:/usr/src/app/storage
