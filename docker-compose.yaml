@@ -20,12 +20,14 @@ services:
       MYSQL_PASSWORD: ${OCTO_MYSQL_PW}
       MYSQL_DATABASE: octopus
     volumes:
-      -  /root/octopus/mysql-data:/var/lib/mysql
+      - ./mysql-data:/var/lib/mysql
   mongo:
     restart: always
     image: mongo:3.6.0
     networks:
       - octopus
+    volumes:
+      - ./mongo-data:/data/db
   backend:
     restart: always
     image: fwchen/octopus-backend:latest
