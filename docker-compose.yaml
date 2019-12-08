@@ -18,6 +18,7 @@ services:
     environment:
       MYSQL_USER: octopus
       MYSQL_PASSWORD: ${OCTO_MYSQL_PW}
+      MYSQL_ROOT_PASSWORD: ${OCTO_MYSQL_PW}
       MYSQL_DATABASE: octopus
     volumes:
       - ./mysql-data:/var/lib/mysql
